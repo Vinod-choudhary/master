@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Master Portfolio - Vinod Kumar Choudhary</title>
+<style>
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #1f2937;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+  }
+  a {
+    text-decoration: none;
+    color: #4f46e5;
+    font-weight: 600;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* Container */
+  .container {
+    max-width: 1100px;
+    margin: 3rem auto 5rem;
+    background: white;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Header with photo and name */
+  header {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(90deg, #4f46e5, #3b82f6);
+    color: white;
+    padding: 2rem 2.5rem;
+    gap: 2rem;
+  }
+  header img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    flex-shrink: 0;
+  }
+  header .info {
+    flex-grow: 1;
+  }
+  header .info h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.3rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  header .info p {
+    font-size: 1.3rem;
+    font-weight: 400;
+    opacity: 0.9;
+    line-height: 1.5;
+  }
+
+  /* Hamburger and nav */
+  .hamburger {
+    cursor: pointer;
+    width: 40px;
+    height: 32px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .hamburger span {
+    display: block;
+    height: 5px;
+    background: white;
+    border-radius: 4px;
+    transition: 0.3s ease;
+  }
+  /* Animate hamburger when active */
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+  }
+
+  /* Navigation container (side menu) */
+  nav {
+    background: #312e81;
+    color: white;
+    width: 280px;
+    max-width: 90vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -320px;
+    padding-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1200;
+  }
+  nav.open {
+    left: 0;
+  }
+  nav button {
+    background: #4338ca;
+    border: none;
+    color: white;
+    padding: 1.25rem 1.5rem;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 90%;
+    margin: 0 auto;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(67, 56, 202, 0.5);
+    transition: background 0.3s ease;
+    user-select: none;
+  }
+  nav button:hover, nav button:focus {
+    background: #6366f1;
+    outline: none;
+  }
+
+  /* Main content area */
+  main {
+    padding: 3rem 4rem;
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: 70vh;
+  }
+  main h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1.6rem;
+    color: #4338ca;
+    font-weight: 700;
+    border-bottom: 3px solid #a5b4fc;
+    padding-bottom: 0.4rem;
+    letter-spacing: 0.5px;
+  }
+  main section {
+    margin-bottom: 4rem;
+    line-height: 1.65;
+  }
+  main section p {
+    font-size: 1.15rem;
+    margin-bottom: 1.2rem;
+    color: #374151;
+  }
+  main section p strong {
+    color: #312e81;
+  }
+
+  /* Day list styles */
+  .day-list {
+    background: #e0e7ff;
+    border-left: 6px solid #4338ca;
+    padding: 1.3rem 2rem;
+    border-radius: 9px;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 15px rgba(67, 56, 202, 0.15);
+    transition: background 0.3s ease;
+  }
+  .day-list:hover {
+    background: #c7d2fe;
+  }
+  .day-list h3 {
+    margin-bottom: 0.6rem;
+    color: #3730a3;
+  }
+  .day-list ul {
+    list-style: disc inside;
+    margin-left: 0.8rem;
+  }
+  .day-list ul li {
+    margin-bottom: 0.5rem;
+    color: #4b5563;
+    font-weight: 500;
+  }
+
+  /* Contact info */
+  .contact-info {
+    background: #eef2ff;
+    border-radius: 10px;
+    padding: 1.5rem 2rem;
+    box-shadow: inset 0 0 10px #c7d2fe;
+    font-size: 1.1rem;
+    color: #4338ca;
+    line-height: 1.6;
+  }
+  .contact-info strong {
+    display: inline-block;
+    width: 90px;
+  }
+  .contact-info a {
+    color: #4f46e5;
+  }
+  .contact-info a:hover {
+    color: #3730a3;
+  }
+
+  /* Visit website button */
+  .visit-btn {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.75rem 1.8rem;
+    background: #4338ca;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 9px;
+    box-shadow: 0 6px 15px rgba(67, 56, 202, 0.6);
+    transition: background 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    text-decoration: none;
+  }
+  .visit-btn:hover, .visit-btn:focus {
+    background: #6366f1;
+    outline: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .container {
+      margin: 2rem 1rem 4rem;
+    }
+    header {
+      flex-direction: column;
+      text-align: center;
+      gap: 1.2rem;
+    }
+    main {
+      padding: 2rem 2rem;
+    }
+    nav {
+      width: 75vw;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav id="sideNav" aria-label="Main navigation">
+  <button data-section="button1" aria-controls="button1" aria-expanded="false">Day1,2,3</button>
+  <button data-section="button2" aria-controls="button2" aria-expanded="false">Day4,5</button>
+  <button data-section="button3" aria-controls="button3" aria-expanded="true">Day6,7</button>
+</nav>
+
+<!-- Container for portfolio -->
+<div class="container" role="main">
+
+  <!-- Header with photo and info + hamburger -->
+  <header>
+     <img src="vinodphoto.jpg" alt="My Photo" />
+    <div class="info">
+      <h1>Vinod Kumar Choudhary</h1>
+      <p>Web Developer | Portfolio & Projects | Shopping Website Creator</p>
+    </div>
+    <div class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <main tabindex="0">
+
+    <!-- Button 1 Section: Day123 -->
+    <section id="button1" aria-hidden="true" style="display:none;">
+      <h2>Personal Portfolio Website</h2>
+      <p>Welcome to my personal portfolio website, where I showcase my projects, skills, and passions. This site contains multiple categories including web development, UI/UX design, and coding tutorials.</p>
+      <p>My portfolio includes projects built with modern web technologies such as HTML5, CSS3, JavaScript, React, and Node.js. You will find detailed descriptions, code samples, and live demos.</p>
+
+      <div class="day-list" tabindex="0">
+        <h3>Day 1</h3>
+        <ul>
+          <li>Setup project environment and tools.</li>
+          <li>Designed homepage layout and wireframes.</li>
+        </ul>
+      </div>
+
+      <div class="day-list" tabindex="0">
+        <h3>Day 2</h3>
+        <ul>
+          <li>Developed navigation and responsive design.</li>
+          <li>Integrated contact and about pages.</li>
+        </ul>
+      </div>
+
+      <div class="day-list" tabindex="0">
+        <h3>Day 3</h3>
+        <ul>
+          <li>Added portfolio project sections.</li>
+          <li>Implemented smooth scrolling and animations.</li>
+        </ul>
+      </div>
+
+      <a href="https://vinod-choudhary.github.io/-/" target="_blank" rel="noopener" class="visit-btn" aria-label="Visit Personal Portfolio Website">Visit Website</a>
+    </section>
+
+    <!-- Button 2 Section: Day45 -->
+    <section id="button2" aria-hidden="true" style="display:none;">
+      <h2>Your Life Shop - Shopping Website</h2>
+      <p>Your Life Shop is an e-commerce website designed and developed by me. It includes various categories such as Electronics, Fashion, Home & Kitchen, Sports, and Deals.</p>
+      <p>The website features a smooth user experience with product listings, search functionality, cart management, and checkout pages. It is built with semantic HTML, CSS for styling, and JavaScript for interactivity.</p>
+
+      <div class="day-list" tabindex="0">
+        <h3>Day 4</h3>
+        <ul>
+          <li>Implemented product categories pages with responsive grid layout.</li>
+          <li>Added search bar with dynamic suggestions and filtering.</li>
+        </ul>
+      </div>
+
+      <div class="day-list" tabindex="0">
+        <h3>Day 5</h3>
+        <ul>
+          <li>Developed cart functionality with add, remove, and quantity update features.</li>
+          <li>Created checkout page with form validation and confirmation.</li>
+        </ul>
+      </div>
+
+      <a href="https://vinod-choudhary.github.io/shop/" target="_blank" rel="noopener" class="visit-btn" aria-label="Visit Your Life Shop Website">Visit Website</a>
+    </section>
+
+   <!-- Button 3 Section: Day67 -->
+    <section id="button3" aria-hidden="false" style="display:block;">
+      <h2>Master Portfolio - Vinod's Profile</h2>
+      <p>Welcome to my master portfolio page, where I share detailed information about myself, my skills, and my contact information.</p>
+
+      <h3>Contact Information</h3>
+      <div class="contact-info" tabindex="0">
+        <p><strong>Address:</strong> Shashank Apartment, Mahim Road, Palghar, Maharashtra</p>
+        <p><strong>Phone:</strong> <a href="tel:+9022195759">9022 195759</a></p>
+        <p><strong>Email:</strong> <a href="mailto:Chaudharyv8080@gmail.com">Chaudharyv8080@gmail.com</a></p>
+        <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/yourlinkedin" target="_blank" rel="noopener">https://www.linkedin.com/in/vinod-choudhary-26021431a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app </a></p>
+        <p><strong>GitHub:</strong> <a href="https://github.com/yourgithub" target="_blank" rel="noopener">https://github.com/Vinod-choudhary</a></p>
+      </div>
+
+      <h3>About Me</h3>
+      <p>I am a passionate web developer with expertise in modern web technologies including HTML, CSS, JavaScript, React, and Node.js. I enjoy building responsive, user-friendly websites and web applications.</p>
+      <p>My projects reflect my dedication to clean code, efficient design, and excellent user experience. I continuously learn and adapt to new technologies and trends.</p>
+
+      <h3>Additional Project Days</h3>
+
+      <div class="day-list" tabindex="0">
+        <h3>Day 6</h3>
+        <ul>
+          <li>Created master portfolio page with detailed profile and project links.</li>
+          <li>Ensured accessibility and smooth navigation.</li>
+        </ul>
+      </div>
+
+      <div class="day-list" tabindex="0">
+        <h3>Day 7</h3>
+        <ul>
+          <li>Added final polish, responsiveness, and cross-browser testing.</li>
+          <li>Deployed and maintained the full portfolio website.</li>
+        </ul>
+      </div>
+
+      <a href="#button3" class="visit-btn" aria-label="Back to Master Portfolio Section">Back to Master Portfolio</a>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  const hamburger = document.getElementById('hamburgerBtn');
+  const nav = document.getElementById('sideNav');
+  const buttons = nav.querySelectorAll('button');
+  const sections = document.querySelectorAll('main section');
+
+  // Toggle nav open/close
+  function toggleNav() {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', !expanded);
+    nav.classList.toggle('open');
+  }
+
+  hamburger.addEventListener('click', toggleNav);
+  hamburger.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleNav();
+    }
+  });
+
+  // Show content for clicked button and scroll to it smoothly
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Hide all sections and update aria-expanded on buttons
+      sections.forEach(section => {
+        section.style.display = 'none';
+        section.setAttribute('aria-hidden', 'true');
+      });
+      buttons.forEach(b => b.setAttribute('aria-expanded', 'false'));
+
+      // Show selected section by id = button1/button2/button3
+      const target = btn.getAttribute('data-section');
+      const targetSection = document.getElementById(target);
+      if (targetSection) {
+        targetSection.style.display = 'block';
+        targetSection.setAttribute('aria-hidden', 'false');
+        targetSection.focus({preventScroll:true});
+        targetSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+
+      btn.setAttribute('aria-expanded', 'true');
+
+      // Close nav after selection
+      nav.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+
+    btn.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        btn.click();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
+
